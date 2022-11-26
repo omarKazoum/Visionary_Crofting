@@ -1,5 +1,3 @@
-<img src="https://simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2F23a52cf6-dfe2-4169-9e96-bb6e8a256934.jpg&w=1280&q=75"
-width="100%">
 # Project
 Vous vous trouvez au sein du service informatique de l’entreprise Visionary Crofting, qui se spécialise dans la vente des produits agricoles.
 
