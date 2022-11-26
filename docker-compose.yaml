@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:10-alpine
+    ports:
+      - "9999:5432"
+      - 5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: visionaryDb
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    ports:
+      - 7770:8080
+    depends_on:
+      - db
