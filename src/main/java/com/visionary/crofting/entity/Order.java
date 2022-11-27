@@ -3,10 +3,9 @@ package com.visionary.crofting.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,5 +14,20 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
-    String name;
+    LocalDate date;
+    float totalPrice;
+    //TODO add client many to one relationship here
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    List<OrderItem> items = new java.util.ArrayList<>();
+
+    @Enumerated(EnumType.ORDINAL)
+    OrderStatusEnum status;
+    enum OrderStatusEnum{
+        CREATED,
+        CANCELED,
+        PAYED,
+        DELIVERED
+    }
+
 }

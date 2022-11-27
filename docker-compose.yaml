@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:10-alpine
+    image: postgres:9
     ports:
       - "9999:5432"
       - 5432
