@@ -17,4 +17,6 @@ public class Client extends User{
     private List<Order> orders;
     private RoleEnum role = RoleEnum.CLIENT;
 
+
+
 }
