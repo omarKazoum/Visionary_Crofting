@@ -9,12 +9,13 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "orders")
 @NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
-    LocalDate date;
+    private Long id;
+    private LocalDate date;
     float totalPrice;
     //TODO add client many to one relationship here
 
