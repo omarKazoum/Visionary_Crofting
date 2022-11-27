@@ -10,28 +10,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
-@Table(name = "order_item")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem {
+public class SupplyRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "reference_product",nullable = false)
+    private String productReference;
     @ManyToOne
-    private Product product;
-    @Column(name = "total_price",nullable = false)
-    private float totalPrice;
-    @Column(nullable = false)
-    private int quantity;
-
+    private Stock stock;
+    private SupplyRequestEnum status;
+    private Date createdAt = new Date();
     @ManyToOne
-    private Order order;
+    private Supplier supplier;
 
 
+    public enum SupplyRequestEnum{
+        OPEN,
+        CANCELED,
+        CONFIRMED,
+        CLOSED
+    }
 
 }

@@ -1,33 +1,39 @@
 package com.visionary.crofting.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
-    LocalDate date;
-    float totalPrice;
-    //TODO add client many to one relationship here
+    private Long id;
+    @Column(name = "reference",nullable = false,unique = true)
+    private String reference;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
-    List<OrderItem> items = new java.util.ArrayList<>();
-
-    @Enumerated(EnumType.ORDINAL)
-    OrderStatusEnum status;
-    enum OrderStatusEnum{
+    private Date createdAt = new Date();
+    @Column(name = "total_price",nullable = false)
+    private double totalPrice;
+    @ManyToOne
+    private Client client;
+    @OneToMany
+    private List<OrderItem> orderItems;
+    private OrderStatusEnum status;
+    public enum OrderStatusEnum{
         CREATED,
         CANCELED,
         PAYED,
         DELIVERED
     }
+
 
 }
