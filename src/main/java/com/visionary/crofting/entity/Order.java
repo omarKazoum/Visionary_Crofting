@@ -21,12 +21,16 @@ public class Order {
     private String reference;
 
     private Date createdAt = new Date();
+
     @Column(name = "total_price",nullable = false)
     private double totalPrice;
+
     @ManyToOne
     private Client client;
-    @OneToMany
+
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
+
     private OrderStatusEnum status;
     public enum OrderStatusEnum{
         CREATED,
