@@ -32,7 +32,7 @@ public class ClientController {
         }
     }
 
- /*   @GetMapping("/client/{uuid}")
+    @GetMapping("/client/{uuid}")
     public ResponseEntity<ApiResponse<Client>> getClientById(@PathVariable String uuid , @RequestHeader Map<String, String> headers )throws Exception{
         try {
             ApiResponse<Client> response = service.find(uuid);
@@ -42,5 +42,5 @@ public class ClientController {
             clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
             return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
         }
-    }*/
+    }
 }
