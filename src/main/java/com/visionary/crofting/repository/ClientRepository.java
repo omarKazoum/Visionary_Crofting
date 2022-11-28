@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Long> {
 
-   // Client findByUuid(String uuid);
+    Client findByUuid(String uuid);
 }

@@ -47,7 +47,7 @@ public class ClientService implements IService<Client,ClientRequest> {
 
     }
 
-/*    @Override
+    @Override
     public ApiResponse<Client> find(String uuid) throws Exception {
         try {
             ApiResponse<Client> clientApiResponse = new ApiResponse<>();
@@ -72,7 +72,7 @@ public class ClientService implements IService<Client,ClientRequest> {
             clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
             return clientApiResponse;
         }
-    }*/
+    }
 
     public boolean validateClient(ClientRequest request){
         Pattern emailPattern =Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
@@ -96,12 +96,12 @@ public class ClientService implements IService<Client,ClientRequest> {
         }
     }
 
-/*    public boolean validateUUID(String uuid){
+    public boolean validateUUID(String uuid){
         Pattern emailPattern =Pattern.compile("[a-f0-9]{8}(?:-[a-f0-9]{4}){4}[a-f0-9]{8}");
         Matcher emailMatcher = emailPattern.matcher(uuid);
         if(!emailMatcher.matches() || uuid.isEmpty() || uuid.isBlank() ){
             return false;
         }
         return true;
-    }*/
+    }
 }
