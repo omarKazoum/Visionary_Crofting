@@ -8,6 +8,7 @@ import com.visionary.crofting.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -73,7 +74,15 @@ public class ClientService implements IService<Client,ClientRequest> {
             return clientApiResponse;
         }
     }
-
+    @Override
+    public ApiResponse<List<Client>> findAll() throws Exception {
+        List<Client> clients = clientRepository.findAll();
+        ApiResponse<List<Client>> clientApiResponse = new ApiResponse<>();
+        clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+        clientApiResponse.setResponseMessage("Client exist");
+        clientApiResponse.setData(clients);
+        return clientApiResponse;
+    }
     public boolean validateClient(ClientRequest request){
         Pattern emailPattern =Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         if (!Objects.isNull(request)){

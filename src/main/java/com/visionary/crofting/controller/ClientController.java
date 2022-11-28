@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,4 +44,18 @@ public class ClientController {
             return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
         }
     }
+
+    @GetMapping("/clients")
+    ResponseEntity<ApiResponse<List<Client>>> getListClients()throws Exception {
+        try {
+            ApiResponse<List<Client>> response = service.findAll();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            ApiResponse<List<Client>> clientApiResponse = new ApiResponse<>();
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
+        }
+    }
+
+
 }
