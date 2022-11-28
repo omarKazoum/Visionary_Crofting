@@ -4,8 +4,6 @@ import com.visionary.crofting.response.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController("/api/orders")
 public class OrderController {
     @GetMapping("/test")
@@ -17,4 +15,5 @@ public class OrderController {
         response.setResponseMessage("everything went well");
         return response;
     }
+
 }
