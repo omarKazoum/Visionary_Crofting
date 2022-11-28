@@ -74,7 +74,6 @@ public class ClientService implements IService<Client,ClientRequest> {
             return clientApiResponse;
         }
     }
-
     @Override
     public ApiResponse<List<Client>> findAll() throws Exception {
         List<Client> clients = clientRepository.findAll();
@@ -84,7 +83,6 @@ public class ClientService implements IService<Client,ClientRequest> {
         clientApiResponse.setData(clients);
         return clientApiResponse;
     }
-
     public boolean validateClient(ClientRequest request){
         Pattern emailPattern =Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         if (!Objects.isNull(request)){

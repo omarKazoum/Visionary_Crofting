@@ -10,6 +10,4 @@ public interface IService<T,R>  {
     ApiResponse<T> save(R Request) throws Exception;
     ApiResponse<T> find(String uuid) throws Exception;
     ApiResponse<List<T>> findAll() throws Exception;
-
-
 }
