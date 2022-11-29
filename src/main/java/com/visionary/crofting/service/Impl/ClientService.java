@@ -84,6 +84,7 @@ public class ClientService implements IService<Client,ClientRequest> {
         clientApiResponse.setData(clients);
         return clientApiResponse;
     }
+
     @Override
     public ApiResponse<Client> delete(String uuid) throws Exception {
         try {
@@ -105,6 +106,7 @@ public class ClientService implements IService<Client,ClientRequest> {
             return clientApiResponse;
         }
     }
+
 
     public boolean validateClient(ClientRequest request){
         Pattern emailPattern =Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");

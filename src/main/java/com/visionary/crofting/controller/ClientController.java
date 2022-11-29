@@ -57,6 +57,7 @@ public class ClientController {
         }
     }
 
+
     @DeleteMapping("/client/{uuid}")
     public ResponseEntity<ApiResponse<Client>> deleteClientById(@PathVariable String uuid){
         try {
@@ -68,5 +69,6 @@ public class ClientController {
             return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
         }
     }
+
 
 }
