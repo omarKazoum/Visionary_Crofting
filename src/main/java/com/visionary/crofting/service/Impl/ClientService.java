@@ -84,6 +84,27 @@ public class ClientService implements IService<Client,ClientRequest> {
         clientApiResponse.setData(clients);
         return clientApiResponse;
     }
+    @Override
+    public ApiResponse<Client> delete(String uuid) throws Exception {
+        try {
+            ApiResponse<Client> clientApiResponse = new ApiResponse<>();
+            ApiResponse<Client> clientResponse = this.find(uuid);
+            if (!Objects.isNull(clientResponse.getData())){
+                clientRepository.delete(clientResponse.getData());
+                clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+                clientApiResponse.setResponseMessage("Client deleted");
+                clientApiResponse.setData(clientApiResponse.getData());
+                return clientApiResponse;
+            }
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.NOT_EXIST);
+            clientApiResponse.setResponseMessage("Client not deleted");
+            return clientApiResponse;
+        }catch (Exception e){
+            ApiResponse<Client> clientApiResponse = new ApiResponse<>();
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return clientApiResponse;
+        }
+    }
 
     public boolean validateClient(ClientRequest request){
         Pattern emailPattern =Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
@@ -115,4 +136,9 @@ public class ClientService implements IService<Client,ClientRequest> {
         }
         return true;
     }
+
+//    public Client checkClient(Client client,String uuid){
+//        Client findClient = clientRepository.findByUuid(uuid);
+//        return findClient;
+//    }
 }
