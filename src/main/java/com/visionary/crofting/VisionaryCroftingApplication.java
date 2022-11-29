@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.ArrayList;
 
 @SpringBootApplication
-public class VisionaryCroftingApplication implements CommandLineRunner {
+public class VisionaryCroftingApplication  {
 	@Autowired
 	SupplierRepository supplierRepository;
 
@@ -21,10 +21,27 @@ public class VisionaryCroftingApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(VisionaryCroftingApplication.class, args);
 	}
-
+/*
 	@Override
 	public void run(String... args) throws Exception {
+		*//*Supplier s=new Supplier();
+		s.setName("test supplier");
+		s.setEmail("sdhs@kjk.cd");
+		s.setSupplyRequests(new ArrayList<>());
+		s.setPhone("hsjdh");
+		s.setPassword("dfdf");
+		s.setUuid("efdf");
+		supplierRepository.save(s);
+		System.out.println("supplier added!");*//*
+		Client s=new Client();
+		s.setName("test supplier");
+		s.setEmail("sdhs@kjk.cd");
+		s.setOrders(new ArrayList<>());
+		s.setPhone("hsjdh");
+		s.setPassword("dfdf");
+		s.setUuid("efdf");
+		clientRepository.save(s);
+		System.out.println("supplier added!");
 
-
-	}
+	}*/
 }

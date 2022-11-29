@@ -23,6 +23,8 @@ public class ApiResponse<T> {
         VALIDATION_ERROR,
         NOT_ALLOWED,
         INVALID_CREDENTIALS,
-        INVALID_TOKEN
+        INVALID_TOKEN,
+        ERROR_TECHNIQUE,
+        NOT_EXIST
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class Client extends User{
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
+
     private RoleEnum role = RoleEnum.CLIENT;
 
 }
