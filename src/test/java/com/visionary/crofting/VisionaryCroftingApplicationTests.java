@@ -1,24 +1,29 @@
 package com.visionary.crofting;
 
 import com.visionary.crofting.entity.Order;
-import com.visionary.crofting.entity.OrderItem;
-import com.visionary.crofting.entity.Product;
-import com.visionary.crofting.request.OrderItemDTO;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.NameTokenizers;
-import org.modelmapper.spi.NameTokenizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 
-import javax.print.attribute.standard.Destination;
-
+import java.util.stream.Stream;
+@SpringBootTest
 class VisionaryCroftingApplicationTests {
-
+	@Autowired
+	GenericWebApplicationContext context;
 	@Test
 	void contextLoads() {
 	}
 	@Test
 	public void testModelMapperForOrderItem(){
+		/*System.out.println("all beans list");
+		Stream.of(context.getBeanDefinitionNames()).filter(n->n.contains("TestBean")).forEach(System.out::println);
+		System.out.println("bean class name is "+		BeanFactoryAnnotationUtils.qualifiedBeanOfType(context.getBeanFactory(),TestBean.class,"testBean12").getName());
+		System.out.println("end beans list");
+		System.out.println("applicationContext "+context.getClass().getCanonicalName());
+*/
 //		Order o=new Order();
 //		o.setClient(null);
 //		o.setId(2L);
