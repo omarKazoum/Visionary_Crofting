@@ -69,4 +69,16 @@ public class ClientController {
         }
     }
 
+    @PutMapping("/client/{uuid}")
+    public ResponseEntity<ApiResponse<Client>> updateClient(@PathVariable String uuid,@RequestBody ClientRequest clientRequest){
+        try {
+            ApiResponse<Client> response = service.update(uuid,clientRequest);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            ApiResponse<Client> clientApiResponse = new ApiResponse<>() ;
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
+        }
+    }
+
 }
