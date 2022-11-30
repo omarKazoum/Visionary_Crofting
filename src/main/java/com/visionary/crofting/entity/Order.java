@@ -1,5 +1,6 @@
 package com.visionary.crofting.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,8 @@ public class Order {
     private double totalPrice;
     @ManyToOne
     private Client client;
-    @OneToMany
+    @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private List<OrderItem> orderItems;
     private OrderStatusEnum status;
     public enum OrderStatusEnum{
