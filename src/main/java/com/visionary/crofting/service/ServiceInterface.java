@@ -1,5 +1,6 @@
 package com.visionary.crofting.service;
 
+import com.visionary.crofting.entity.ProductRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,6 @@ public interface ServiceInterface<T> {
     void save(T object) throws Exception;
     T find(String uuid) throws Exception;
     List<T> getProductRequests() throws Exception;
-    void update(Long id);
+    void update(ProductRequest data);
     void delete(Long id);
 }

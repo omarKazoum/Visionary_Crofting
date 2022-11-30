@@ -1,5 +1,7 @@
 package com.visionary.crofting.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Setter
-@Getter
 @Table(name = "supplier")
 public class Supplier extends User{
     @OneToMany(mappedBy = "supplier")
@@ -25,6 +25,16 @@ public class Supplier extends User{
 
     public Supplier() {
         setRole(RoleEnum.SUPPLIER);
+    }
+
+    @JsonIgnore
+    public List<ProductRequest> getSupplyRequests() {
+        return supplyRequests;
+    }
+
+    @JsonSetter
+    public void setSupplyRequests(List<ProductRequest> supplyRequests) {
+        this.supplyRequests = supplyRequests;
     }
 
     @Override

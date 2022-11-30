@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,13 +32,12 @@ public class productRequestController {
     public void createNewRequest(@RequestBody ProductRequest productRequest)  {
         productRequestService.save(productRequest);
     }
-    /*
-    @PutMapping("update/{requestId}")
-    public void updateStudent(@PathVariable("studentId") Long id, @RequestParam(required = false) String name , @RequestParam(required = false) String email) throws IllegalAccessException {
-        studentService.updateStudent(id,name,email);
+
+    @PutMapping("/update")
+    public void updateStudent(@RequestBody ProductRequest productRequest) {
+        productRequestService.update(productRequest);
     }
 
-     */
     @DeleteMapping(path = "/delete/{requestId}")
     public void deleteStudent(@PathVariable("requestId") Long id){
         productRequestService.delete(id);
