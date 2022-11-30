@@ -1,8 +1,8 @@
 package com.visionary.crofting.service;
 
+import com.visionary.crofting.dto.OrderItemDTO;
 import com.visionary.crofting.entity.OrderItem;
 import com.visionary.crofting.exceptions.BusinessException;
-import com.visionary.crofting.requests.OrderItemDTO;
 
 import java.util.List;
 public interface IOrderItemService {
