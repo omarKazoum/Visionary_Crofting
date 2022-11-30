@@ -1,24 +1,39 @@
 package com.visionary.crofting.service.Impl;
 
+import com.visionary.crofting.dto.OrderDTO;
 import com.visionary.crofting.entity.Order;
 import com.visionary.crofting.entity.OrderItem;
 import com.visionary.crofting.exceptions.BusinessException;
+import com.visionary.crofting.repository.ClientRepository;
 import com.visionary.crofting.repository.OrderRepository;
 import com.visionary.crofting.service.IOrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    ClientRepository clientRepository;
     @Override
-    public Order addOrder(Order order) {
-        //TODO implement this
-        return null;
+    public Order addOrder(OrderDTO orderDTO) throws BusinessException{
+        List<String> errors=new ArrayList<>();
+        if(!isOrderDTOValide(orderDTO,errors,OperationENum.ADD))
+            throw new BusinessException("invalid token",errors);
+            ModelMapper modelMapper=new ModelMapper();
+            Order orderToSave=modelMapper.map(orderDTO,Order.class);
+            orderToSave.setClient(clientRepository.findById(orderDTO.getClientId()).get());
+            orderToSave.setReference(UUID.randomUUID().toString());
+            orderToSave.setTotalPrice(0);
+            orderToSave.setCreatedAt(new Date());
+            orderToSave.setStatus(Order.OrderStatusEnum.CREATED);
+            orderToSave.setId(null);
+            orderToSave=orderRepository.save(orderToSave);
+        return orderToSave;
     }
 
     @Override
@@ -27,8 +42,25 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Order updateOrder(Order order) {
-        return null;
+    public Order updateOrder(OrderDTO orderDTO) throws BusinessException{
+        List<String> errors=new ArrayList<>();
+        if(!isOrderDTOValide(orderDTO,errors,OperationENum.ADD))
+            throw new BusinessException("invalid token",errors);
+
+        Order orderToUpdate=orderRepository.findById(orderDTO.getId()).get();
+        orderToUpdate.setClient(clientRepository.findById(orderDTO.getClientId()).get());
+        orderToUpdate.setTotalPrice(orderDTO.getTotalPrice()!=-1?orderDTO.getTotalPrice():orderToUpdate.getTotalPrice());
+        orderToUpdate.setCreatedAt(orderDTO.getCreatedAt()!=null?orderDTO.getCreatedAt():orderToUpdate.getCreatedAt());
+        orderToUpdate.setDate(orderDTO.getDate()!=null?orderDTO.getDate():orderToUpdate.getDate());
+        orderToUpdate.setStatus(Order.OrderStatusEnum.CREATED);
+        orderToUpdate=orderRepository.save(orderToUpdate);
+
+        return orderToUpdate;
+    }
+
+    @Override
+    public List<Order> getAll() {
+        return orderRepository.findAll();
     }
 
     @Override
@@ -38,21 +70,25 @@ public class OrderServiceImpl implements IOrderService {
         return orderRepository.findById(orderId).get().getOrderItems();
     }
 
-    /*boolean isOrderItemDTOValide(OrderItemDTO orderItemDTO, List<String> errors){
+    boolean isOrderDTOValide(OrderDTO orderDTO, List<String> errors,OperationENum operationENum){
         boolean valide=true;
-        if(orderItemDTO.getOrderId()==0 || !orderRepository.existsById(orderItemDTO.getOrderId())) {
-            errors.add("order item not associated with any order!");
+        if(operationENum.equals(OperationENum.UPDATE) && (orderDTO.getClientId()==null || !clientRepository.existsById(orderDTO.getId()))) {
+            errors.add("invalid client id!");
             valide = false;
         }
-        if(orderItemDTO.getProductId()==0 || !productRepository.existsById(orderItemDTO.getProductId())) {
-            errors.add("order item not associated with any product!");
+        if(operationENum.equals(OperationENum.UPDATE) && (orderDTO.getId()==null || !orderRepository.existsById(orderDTO.getId()))) {
+            errors.add("invalid order id!");
             valide = false;
         }
-        if(orderItemDTO.getQuantity()<=0) {
-            errors.add("invalid product quantity '"+orderItemDTO.getQuantity()+"' not allowed!");
-            valide = false;
-        }
+
+       //TODO continue validation
+
         return valide;
     }
-*/
+    enum OperationENum{
+        ADD,
+        UPDATE
+
+    }
+
 }
