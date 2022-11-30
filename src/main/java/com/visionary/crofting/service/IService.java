@@ -11,4 +11,5 @@ public interface IService<T,R>  {
     ApiResponse<T> find(String uuid) throws Exception;
     ApiResponse<List<T>> findAll() throws Exception;
     ApiResponse<T> delete(String uuid) throws Exception;
+    ApiResponse<T> update(String uuid,R Request) throws Exception;
 }

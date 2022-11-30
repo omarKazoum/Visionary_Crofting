@@ -108,6 +108,40 @@ public class ClientService implements IService<Client,ClientRequest> {
     }
 
 
+    @Override
+    public ApiResponse<Client> update(String uuid, ClientRequest Request) throws Exception {
+        try {
+            ApiResponse<Client> clientApiResponse = new ApiResponse<>();
+            ApiResponse<Client> clientResponse = this.find(uuid);
+            if (!Objects.isNull(clientResponse.getData())){
+                if ( Request.getName() != null) {
+                    clientResponse.getData().setName(Request.getName());
+                }
+                if ( Request.getEmail() != null ) {
+                    clientResponse.getData().setEmail(Request.getEmail());
+                }
+                if ( Request.getPassword() != null) {
+                    clientResponse.getData().setPassword(Request.getPassword());
+                }
+                if ( Request.getPhone() != null) {
+                    clientResponse.getData().setPhone(Request.getPhone());
+                }
+                clientRepository.save(clientResponse.getData());
+                clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+                clientApiResponse.setResponseMessage("Client updated");
+                clientApiResponse.setData(clientApiResponse.getData());
+                return clientApiResponse;
+            }
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.NOT_EXIST);
+            clientApiResponse.setResponseMessage("Client not updated");
+            return clientApiResponse;
+        }catch (Exception e){
+            ApiResponse<Client> clientApiResponse = new ApiResponse<>();
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return clientApiResponse;
+        }
+    }
+
     public boolean validateClient(ClientRequest request){
         Pattern emailPattern =Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         if (!Objects.isNull(request)){
@@ -139,8 +173,4 @@ public class ClientService implements IService<Client,ClientRequest> {
         return true;
     }
 
-//    public Client checkClient(Client client,String uuid){
-//        Client findClient = clientRepository.findByUuid(uuid);
-//        return findClient;
-//    }
 }
