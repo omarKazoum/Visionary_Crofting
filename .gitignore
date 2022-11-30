@@ -18,7 +18,6 @@ target/
 *.iws
 *.iml
 *.ipr
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -33,4 +32,4 @@ build/
 .vscode/
 data
 #docker-compose.yaml
-#src/main/resources/application.properties
+src/main/resources/application.properties

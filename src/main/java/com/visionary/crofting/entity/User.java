@@ -5,35 +5,38 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
     private Long id ;
     @Column(name = "uuid_user",length = 60,nullable = false,unique = true)
     private String uuid;
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
-    @Column(name = "email", nullable = false , unique = true)
+    @Column(nullable = false , unique = true)
     private String email;
-    @Column(name = "password", nullable = false )
+    @Column( nullable = false )
     private String password;
-    @Column(name = "phone", nullable = false , unique = true)
+    @Column( nullable = false , unique = true)
     private String phone;
     @Enumerated(EnumType.STRING)
-    protected  RoleEnum role;
+    private  RoleEnum role;
 
-    public enum RoleEnum{
-        SUPPLIER,
-        CLIENT
+    public User(String name, String email, String password, String phone) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
     }
 
+    public enum RoleEnum{
+        SUPPLIER ,
+        CLIENT
+    }
 
 }
