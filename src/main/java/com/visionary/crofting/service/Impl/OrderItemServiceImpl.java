@@ -1,11 +1,11 @@
 package com.visionary.crofting.service.Impl;
 
+import com.visionary.crofting.dto.OrderItemDTO;
 import com.visionary.crofting.entity.OrderItem;
 import com.visionary.crofting.exceptions.BusinessException;
 import com.visionary.crofting.repository.OrderItemRepository;
 import com.visionary.crofting.repository.OrderRepository;
 import com.visionary.crofting.repository.ProductRepository;
-import com.visionary.crofting.requests.OrderItemDTO;
 import com.visionary.crofting.service.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

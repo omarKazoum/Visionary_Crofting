@@ -81,17 +81,7 @@ public class ClientController {
         }
     }
 
-    @DeleteMapping("/client/{uuid}")
-    public ResponseEntity<ApiResponse<Client>> deleteClientById(@PathVariable String uuid){
-        try {
-            ApiResponse<Client> response = service.delete(uuid);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
-            ApiResponse<Client> clientApiResponse = new ApiResponse<>() ;
-            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
-            return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
-        }
-    }
+
 
 
 }
