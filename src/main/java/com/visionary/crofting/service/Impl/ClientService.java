@@ -84,6 +84,7 @@ public class ClientService implements IService<Client,ClientRequest> {
         clientApiResponse.setData(clients);
         return clientApiResponse;
     }
+
     @Override
     public ApiResponse<Client> delete(String uuid) throws Exception {
         try {
@@ -105,6 +106,7 @@ public class ClientService implements IService<Client,ClientRequest> {
             return clientApiResponse;
         }
     }
+
 
     @Override
     public ApiResponse<Client> update(String uuid, ClientRequest Request) throws Exception {
@@ -171,8 +173,4 @@ public class ClientService implements IService<Client,ClientRequest> {
         return true;
     }
 
-//    public Client checkClient(Client client,String uuid){
-//        Client findClient = clientRepository.findByUuid(uuid);
-//        return findClient;
-//    }
 }
