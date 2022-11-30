@@ -2,14 +2,17 @@ package com.visionary.crofting.service.Impl;
 
 import com.visionary.crofting.entity.Client;
 import com.visionary.crofting.repository.ClientRepository;
+import com.visionary.crofting.repository.SupplierRepository;
 import com.visionary.crofting.requests.ClientRequest;
 import com.visionary.crofting.response.ApiResponse;
 import com.visionary.crofting.service.IService;
+import com.visionary.crofting.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,9 +22,11 @@ public class ClientService implements IService<Client,ClientRequest> {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    SupplierRepository supplierRepository;
 
     @Override
-    public ApiResponse<Client> save(ClientRequest request) throws Exception {
+    public ApiResponse<Client> save(ClientRequest request) {
         try {
             ApiResponse<Client> clientApiResponse = new ApiResponse<>();
             boolean dataIsValid =this.validateClient(request);
@@ -49,7 +54,7 @@ public class ClientService implements IService<Client,ClientRequest> {
     }
 
     @Override
-    public ApiResponse<Client> find(String uuid) throws Exception {
+    public ApiResponse<Client> find(String uuid)  {
         try {
             ApiResponse<Client> clientApiResponse = new ApiResponse<>();
             boolean validUUID = validateUUID(uuid);
@@ -76,7 +81,7 @@ public class ClientService implements IService<Client,ClientRequest> {
     }
 
     @Override
-    public ApiResponse<List<Client>> findAll() throws Exception {
+    public ApiResponse<List<Client>> findAll()  {
         List<Client> clients = clientRepository.findAll();
         ApiResponse<List<Client>> clientApiResponse = new ApiResponse<>();
         clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
@@ -86,7 +91,7 @@ public class ClientService implements IService<Client,ClientRequest> {
     }
 
     @Override
-    public ApiResponse<Client> delete(String uuid) throws Exception {
+    public ApiResponse<Client> delete(String uuid)  {
         try {
             ApiResponse<Client> clientApiResponse = new ApiResponse<>();
             ApiResponse<Client> clientResponse = this.find(uuid);
@@ -109,7 +114,7 @@ public class ClientService implements IService<Client,ClientRequest> {
 
 
     @Override
-    public ApiResponse<Client> update(String uuid, ClientRequest Request) throws Exception {
+    public ApiResponse<Client> update(String uuid, ClientRequest Request) {
         try {
             ApiResponse<Client> clientApiResponse = new ApiResponse<>();
             ApiResponse<Client> clientResponse = this.find(uuid);
@@ -140,6 +145,37 @@ public class ClientService implements IService<Client,ClientRequest> {
             clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
             return clientApiResponse;
         }
+    }
+
+
+    public ApiResponse<User> login(ClientRequest Request)  {
+        try {
+            ApiResponse<User> clientApiResponse = new ApiResponse<>();
+            Optional<User> client = clientRepository.findByEmail(Request.getEmail());
+            if (client.isPresent()) {
+                if (client.get().getPassword().equals(Request.getPassword())) {
+                    clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+                    return clientApiResponse;
+                }
+            }else {
+                Optional<User> supplier = supplierRepository.findByEmail(Request.getEmail());
+                if (supplier.isPresent()) {
+                    if (supplier.get().getPassword().equals(Request.getPassword())) {
+                        clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+                        return clientApiResponse;
+                    }
+                }
+            }
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.NOT_EXIST);
+            clientApiResponse.setResponseMessage("user not exists");
+            return clientApiResponse;
+
+        }catch (Exception e){
+            ApiResponse<User> clientApiResponse = new ApiResponse<>();
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return clientApiResponse;
+        }
+
     }
 
     public boolean validateClient(ClientRequest request){

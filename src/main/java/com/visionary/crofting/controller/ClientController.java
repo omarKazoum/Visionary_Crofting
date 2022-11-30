@@ -1,14 +1,24 @@
 package com.visionary.crofting.controller;
 
 import com.visionary.crofting.entity.Client;
+import com.visionary.crofting.entity.User;
 import com.visionary.crofting.requests.ClientRequest;
 import com.visionary.crofting.response.ApiResponse;
 import com.visionary.crofting.service.IService;
+import com.visionary.crofting.service.Impl.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +30,9 @@ public class ClientController {
     @Qualifier("clientService")
     @Autowired
     IService service ;
+
+    @Autowired
+    ClientService clientService ;
 
     @PostMapping("/client")
     public ResponseEntity<ApiResponse<Client>> saveClient(@RequestHeader Map<String, String> headers , @RequestBody ClientRequest clientRequest ) throws Exception{
@@ -82,6 +95,17 @@ public class ClientController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<User>> login(@RequestBody ClientRequest clientRequest)throws Exception{
+        try {
+            ApiResponse<User> response = clientService.login(clientRequest);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            ApiResponse<User> clientApiResponse = new ApiResponse<>() ;
+            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return new ResponseEntity<>(clientApiResponse, HttpStatus.OK);
+        }
+    }
 
 
 
