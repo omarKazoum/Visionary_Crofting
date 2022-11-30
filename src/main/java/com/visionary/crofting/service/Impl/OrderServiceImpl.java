@@ -4,7 +4,6 @@ import com.visionary.crofting.entity.Order;
 import com.visionary.crofting.entity.OrderItem;
 import com.visionary.crofting.exceptions.BusinessException;
 import com.visionary.crofting.repository.OrderRepository;
-import com.visionary.crofting.requests.OrderItemDTO;
 import com.visionary.crofting.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

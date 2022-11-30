@@ -3,7 +3,6 @@ package com.visionary.crofting.dto;
 import com.visionary.crofting.entity.Order;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 @Data
