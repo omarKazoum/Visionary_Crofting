@@ -1,12 +1,12 @@
-package com.visionary.crofting.service.orderItem;
+package com.visionary.crofting.service.Impl;
 
-import com.visionary.crofting.entity.Order;
 import com.visionary.crofting.entity.OrderItem;
 import com.visionary.crofting.exceptions.BusinessException;
 import com.visionary.crofting.repository.OrderItemRepository;
 import com.visionary.crofting.repository.OrderRepository;
 import com.visionary.crofting.repository.ProductRepository;
-import com.visionary.crofting.request.OrderItemDTO;
+import com.visionary.crofting.requests.OrderItemDTO;
+import com.visionary.crofting.service.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +57,10 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
     @Override
     public void delete(Long id) throws BusinessException {
+        if(!orderItemRepository.existsById(id)){
+            throw new BusinessException("order item not found",Arrays.asList("invalid item id"));
+        }else
+            orderItemRepository.deleteById(id);
 
     }
 
@@ -78,21 +82,20 @@ public class OrderItemServiceImpl implements IOrderItemService {
     }
 
 
-    boolean isOrderItemDTOValide(OrderItemDTO orderItem, List<String> errors){
+    boolean isOrderItemDTOValide(OrderItemDTO orderItemDTO, List<String> errors){
         boolean valide=true;
-        if(orderItem.getOrderId()==0 || !orderRepository.existsById(orderItem.getOrderId())) {
+        if(orderItemDTO.getOrderId()==0 || !orderRepository.existsById(orderItemDTO.getOrderId())) {
             errors.add("order item not associated with any order!");
             valide = false;
         }
-        if(orderItem.getProductId()==0/*TODO continue this to validate if the id actually exists */) {
+        if(orderItemDTO.getProductId()==0 || !productRepository.existsById(orderItemDTO.getProductId())) {
             errors.add("order item not associated with any product!");
             valide = false;
         }
-        if(orderItem.getQuantity()<=0) {
-            errors.add("invalid product quantity '"+orderItem.getQuantity()+"' not allowed!");
+        if(orderItemDTO.getQuantity()<=0) {
+            errors.add("invalid product quantity '"+orderItemDTO.getQuantity()+"' not allowed!");
             valide = false;
         }
-
         return valide;
     }
 }

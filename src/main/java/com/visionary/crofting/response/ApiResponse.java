@@ -18,6 +18,7 @@ public class ApiResponse<T> {
     private String responseMessage;
     private T data;
     private List<String> errors;
+
     public enum ResponseCode{
         SUCCESS,
         VALIDATION_ERROR,

@@ -1,11 +1,9 @@
-package com.visionary.crofting.service.orderItem;
+package com.visionary.crofting.service;
 
-import com.visionary.crofting.entity.Order;
 import com.visionary.crofting.entity.OrderItem;
 import com.visionary.crofting.exceptions.BusinessException;
-import com.visionary.crofting.request.OrderItemDTO;
+import com.visionary.crofting.requests.OrderItemDTO;
 
-import javax.transaction.Transactional;
 import java.util.List;
 public interface IOrderItemService {
     OrderItem add(OrderItemDTO orderItem) throws BusinessException;
