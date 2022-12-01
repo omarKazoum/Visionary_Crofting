@@ -44,7 +44,7 @@ public class StockService implements IService {
                 product.setInitialPrice(productRequest.getInitialPrice());
                 product.setQuantity(productRequest.getQuantity());
                 product.setStock(stock);
-                ticketAttachmentRepository.save(product);
+                //ticketAttachmentRepository.save(product);
             }
             stockApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
             stockApiResponse.setData(stock);
