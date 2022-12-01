@@ -70,13 +70,16 @@ public class OrderServiceImpl implements IOrderService {
         return orderRepository.findById(orderId).get().getOrderItems();
     }
 
-    boolean isOrderDTOValide(OrderDTO orderDTO, List<String> errors,OperationENum operationENum){
+    boolean isOrderDTOValide(OrderDTO orderDTO, List<String> errors,OperationENum operation){
         boolean valide=true;
-        if(operationENum.equals(OperationENum.UPDATE) && (orderDTO.getClientId()==null || !clientRepository.existsById(orderDTO.getId()))) {
+        if(operation.equals(OperationENum.UPDATE)){
+
+        }
+        if(operation.equals(OperationENum.UPDATE) && (orderDTO.getClientId()==null || !clientRepository.existsById(orderDTO.getId()))) {
             errors.add("invalid client id!");
             valide = false;
         }
-        if(operationENum.equals(OperationENum.UPDATE) && (orderDTO.getId()==null || !orderRepository.existsById(orderDTO.getId()))) {
+        if(operation.equals(OperationENum.UPDATE) && (orderDTO.getId()==null || !orderRepository.existsById(orderDTO.getId()))) {
             errors.add("invalid order id!");
             valide = false;
         }
