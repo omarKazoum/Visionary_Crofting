@@ -1,5 +1,7 @@
 package com.visionary.crofting.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,9 +27,15 @@ public class Stock {
     private String email;
     @Column(nullable = false )
     private String password;
+
     @OneToMany(mappedBy = "stock" )
+    @JsonIgnore
+    @JsonSetter
     private List<Product> products ;
+
     @OneToMany(mappedBy = "stock")
+    @JsonIgnore
+    @JsonSetter
     private List<SupplyRequest> supplyRequests;
 
 
