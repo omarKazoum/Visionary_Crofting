@@ -1,11 +1,9 @@
 package com.visionary.crofting.requests;
 
-
 import lombok.Data;
 
 @Data
-public class ClientRequest {
-
+public class SupplierRequest {
     private String name;
     private String email;
     private String password;

@@ -1,10 +1,7 @@
-package com.visionary.crofting.request;
+package com.visionary.crofting.dto;
 
-import com.visionary.crofting.entity.Order;
-import com.visionary.crofting.entity.Product;
 import lombok.Data;
 
-import javax.persistence.*;
 @Data
 public class OrderItemDTO {
 
