@@ -1,5 +1,6 @@
 package com.visionary.crofting.service.Impl;
 
+import com.visionary.crofting.entity.Product;
 import com.visionary.crofting.entity.Stock;
 import com.visionary.crofting.repository.StockRepository;
 import com.visionary.crofting.response.ApiResponse;
@@ -21,12 +22,12 @@ public class StockService implements IService {
         try {
             Stock stockrequest = new Stock();
             stockrequest = (Stock) request ;
-            ApiResponse<Stock> clientApiResponse = new ApiResponse<>();
+            ApiResponse<Stock> stockApiResponse = new ApiResponse<>();
             boolean dataIsValid =this.validateStock(stockrequest);
             if( !dataIsValid){
-                clientApiResponse.setResponseCode(ApiResponse.ResponseCode.VALIDATION_ERROR);
-                clientApiResponse.setResponseMessage("data invalid");
-                return clientApiResponse;
+                stockApiResponse.setResponseCode(ApiResponse.ResponseCode.VALIDATION_ERROR);
+                stockApiResponse.setResponseMessage("data invalid");
+                return stockApiResponse;
             }
             Stock stock = new Stock();
             stock.setName(stockrequest.getName());
@@ -35,13 +36,23 @@ public class StockService implements IService {
             stock.setPhone(stockrequest.getPhone());
             stock.setAddress(stockrequest.getAddress());
             stockRepository.save(stock);
-            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
-            clientApiResponse.setData(stock);
-            return clientApiResponse;
+            for (Product productRequest : stockrequest.getProducts()) {
+                Product product = new Product();
+                product.setReference(productRequest.getReference());
+                product.setTitle(productRequest.getTitle());
+                product.setDescription(productRequest.getDescription());
+                product.setInitialPrice(productRequest.getInitialPrice());
+                product.setQuantity(productRequest.getQuantity());
+                product.setStock(stock);
+                ticketAttachmentRepository.save(product);
+            }
+            stockApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+            stockApiResponse.setData(stock);
+            return stockApiResponse;
         }catch (Exception e){
-            ApiResponse<Stock> clientApiResponse = new ApiResponse<>();
-            clientApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
-            return clientApiResponse;
+            ApiResponse<Stock> stockApiResponse = new ApiResponse<>();
+            stockApiResponse.setResponseCode(ApiResponse.ResponseCode.ERROR_TECHNIQUE);
+            return stockApiResponse;
         }
     }
 
