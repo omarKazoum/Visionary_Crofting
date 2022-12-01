@@ -1,17 +1,14 @@
 package com.visionary.crofting;
 
-import com.visionary.crofting.entity.Client;
-import com.visionary.crofting.entity.Supplier;
 import com.visionary.crofting.repository.ClientRepository;
 import com.visionary.crofting.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
 public class VisionaryCroftingApplication  {
 	@Autowired
 	SupplierRepository supplierRepository;

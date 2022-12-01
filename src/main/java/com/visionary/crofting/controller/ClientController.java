@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -35,7 +34,7 @@ public class ClientController {
     ClientService clientService ;
 
     @PostMapping("/client")
-    public ResponseEntity<ApiResponse<Client>> saveClient(@RequestHeader Map<String, String> headers , @RequestBody ClientRequest clientRequest ) throws Exception{
+    public ResponseEntity<ApiResponse<Client>> saveClient( @RequestBody ClientRequest clientRequest ){
         try {
             ApiResponse<Client> response = service.save(clientRequest);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -47,7 +46,7 @@ public class ClientController {
     }
 
     @GetMapping("/client/{uuid}")
-    public ResponseEntity<ApiResponse<Client>> getClientById(@PathVariable String uuid , @RequestHeader Map<String, String> headers )throws Exception{
+    public ResponseEntity<ApiResponse<Client>> getClientById(@PathVariable String uuid ){
         try {
             ApiResponse<Client> response = service.find(uuid);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -59,7 +58,7 @@ public class ClientController {
     }
 
     @GetMapping("/clients")
-    ResponseEntity<ApiResponse<List<Client>>> getListClients()throws Exception {
+    ResponseEntity<ApiResponse<List<Client>>> getListClients(){
         try {
             ApiResponse<List<Client>> response = service.findAll();
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -96,7 +95,7 @@ public class ClientController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<User>> login(@RequestBody ClientRequest clientRequest)throws Exception{
+    public ResponseEntity<ApiResponse<User>> login(@RequestBody ClientRequest clientRequest){
         try {
             ApiResponse<User> response = clientService.login(clientRequest);
             return new ResponseEntity<>(response, HttpStatus.OK);
