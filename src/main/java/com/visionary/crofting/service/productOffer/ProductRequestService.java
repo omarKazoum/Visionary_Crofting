@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductRequestService implements ServiceInterface<ProductRequest> {
@@ -48,6 +49,16 @@ public class ProductRequestService implements ServiceInterface<ProductRequest> {
        productRequest.setStatus(data.getStatus());
        productRequest.setSupplier(data.getSupplier());
         System.out.println("Updated successfuly");
+    }
+
+    @Override
+    @Transactional
+    public void setSupplier(ProductRequest data) {
+        ProductRequest productRequest = productRequestRepository.findById(data.getId()).get();
+
+        productRequest.setSupplier(data.getSupplier());
+
+        System.out.println("Supplier was changed successfully");
     }
 
     @Override

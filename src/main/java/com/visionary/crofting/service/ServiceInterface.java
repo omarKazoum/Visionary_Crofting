@@ -12,5 +12,6 @@ public interface ServiceInterface<T> {
     T find(String uuid) throws Exception;
     List<T> getProductRequests() throws Exception;
     void update(ProductRequest data);
+    void setSupplier(ProductRequest data);
     void delete(Long id);
 }
