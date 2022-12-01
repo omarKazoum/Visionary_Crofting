@@ -34,3 +34,4 @@ build/
 data
 #docker-compose.yaml
 src/main/resources/application.properties
+src/test/java/com/visionary/crofting/OffTopicTests.java

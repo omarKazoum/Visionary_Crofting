@@ -19,8 +19,6 @@ public class OrderController {
     @Autowired
     IOrderService orderService;
 
-    //TODO add missing endpoints
-
     @GetMapping("/{orderId}/orderItems")
     ResponseEntity getOrderItemsPerOrder(@PathVariable("orderId") Long orderId){
         ResponseEntity responseEntity;
@@ -39,13 +37,14 @@ public class OrderController {
             }
             return responseEntity;
     }
-  /*  @GetMapping("/")
-    ResponseEntity getOrderItemsPerOrder(){
+    @PostMapping("/")
+    ResponseEntity addOrder(@RequestBody OrderDTO orderDTO){
+        //continue this the service is currently returning null for testing purposes
         ResponseEntity responseEntity;
-            ApiResponse<List<OrderItemDTO>> apiResponse=new ApiResponse<>();
+            ApiResponse<OrderDTO> apiResponse=new ApiResponse<>();
             try {
-                apiResponse.setData(orderService.getOrderItemsPerOrder(orderId).stream().map(EntityUtils::orderItemDTOToOrderItem).collect(Collectors.toList()));
-                apiResponse.setResponseMessage(String.format("successfully order items for order id %d !",orderId));
+                apiResponse.setData(EntityUtils.orderToOrderDTO(orderService.addOrder(orderDTO)));
+                apiResponse.setResponseMessage("successfully created your order !");
                 apiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
                 responseEntity=new ResponseEntity(apiResponse, HttpStatus.OK);
             }catch(BusinessException exception){
@@ -56,6 +55,36 @@ public class OrderController {
                 responseEntity=new ResponseEntity(apiResponse, HttpStatus.BAD_REQUEST);
             }
             return responseEntity;
-    }*/
+    }
 
+    @GetMapping("/")
+    ResponseEntity getOrders(){
+        ResponseEntity responseEntity;
+        ApiResponse<List<OrderDTO>> apiResponse=new ApiResponse<>();
+            apiResponse.setData(orderService.getAll().stream().map(EntityUtils::orderToOrderDTO).collect(Collectors.toList()));
+            apiResponse.setResponseMessage("successfully returned all available orders !");
+            apiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+            responseEntity=new ResponseEntity(apiResponse, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @PatchMapping
+    ResponseEntity updateOrder(@RequestBody OrderDTO orderDAO){
+        ResponseEntity responseEntity;
+        ApiResponse<OrderDTO> apiResponse=new ApiResponse<>();
+        try {
+            apiResponse.setData(EntityUtils.orderToOrderDTO(orderService.updateOrder(orderDAO)));
+            apiResponse.setResponseMessage("successfully updated your order !");
+            apiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
+            responseEntity=new ResponseEntity(apiResponse, HttpStatus.OK);
+        }catch(BusinessException exception){
+            apiResponse.setResponseMessage(exception.getMessage());
+            exception.setErrors(exception.getErrors());
+            apiResponse.setResponseMessage("unable to satisfy your request!");
+            apiResponse.setResponseCode(ApiResponse.ResponseCode.INVALID_TOKEN);
+            responseEntity=new ResponseEntity(apiResponse, HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
+
+    }
 }
