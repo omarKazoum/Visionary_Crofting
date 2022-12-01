@@ -1,21 +1,15 @@
 package com.visionary.crofting.controller;
 
-import com.visionary.crofting.entity.Client;
 import com.visionary.crofting.entity.Product;
-import com.visionary.crofting.entity.User;
-import com.visionary.crofting.requests.ClientRequest;
 import com.visionary.crofting.requests.ProductRequest;
 import com.visionary.crofting.response.ApiResponse;
 import com.visionary.crofting.service.IService;
-import com.visionary.crofting.service.Impl.ClientService;
 import com.visionary.crofting.service.Impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
