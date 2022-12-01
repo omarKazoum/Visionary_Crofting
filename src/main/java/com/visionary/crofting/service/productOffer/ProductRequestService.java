@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductRequestService implements ServiceInterface<ProductRequest> {
@@ -25,9 +24,7 @@ public class ProductRequestService implements ServiceInterface<ProductRequest> {
     }
 
     @Override
-    public ProductRequest find(String uuid) {
-        return null;
-    }
+    public ProductRequest findByReference(String reference) { return productRequestRepository.findProductRequestByProductReference(reference); }
 
     @Override
     public List<ProductRequest> getProductRequests() {

@@ -20,25 +20,22 @@ public class productRequestController {
     public List<ProductRequest> getProductRequests()  {
             return productRequestService.getProductRequests();
     }
+    @GetMapping("/show/{requestReference}")
+    public ProductRequest getRequestByReference(@PathVariable("requestReference") String reference){
+        return productRequestService.findByReference(reference);
+    }
 
     @PostMapping("/add")
-    public void createNewRequest(@RequestBody ProductRequest productRequest)  {
-        productRequestService.save(productRequest);
-    }
+    public void createNewRequest(@RequestBody ProductRequest productRequest)  { productRequestService.save(productRequest); }
 
     @PutMapping("/update")
-    public void updateRequest(@RequestBody ProductRequest productRequest) {
-        productRequestService.update(productRequest);
-    }
+    public void updateRequest(@RequestBody ProductRequest productRequest) { productRequestService.update(productRequest); }
     @PatchMapping("/set-supplier")
-    public void setRequestSupplier(@RequestBody ProductRequest productRequest){
-        productRequestService.setSupplier(productRequest);
-    }
+    public void setRequestSupplier(@RequestBody ProductRequest productRequest){ productRequestService.setSupplier(productRequest); }
 
     @DeleteMapping(path = "/delete/{requestId}")
     public void deleteRequest(@PathVariable("requestId") Long id){
         productRequestService.delete(id);
     }
-
 
 }

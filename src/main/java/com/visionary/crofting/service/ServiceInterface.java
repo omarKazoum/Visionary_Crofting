@@ -9,7 +9,7 @@ import java.util.List;
 public interface ServiceInterface<T> {
 
     void save(T object) throws Exception;
-    T find(String uuid) throws Exception;
+    T findByReference(String reference) throws Exception;
     List<T> getProductRequests() throws Exception;
     void update(ProductRequest data);
     void setSupplier(ProductRequest data);
