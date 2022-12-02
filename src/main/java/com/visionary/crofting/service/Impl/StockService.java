@@ -2,12 +2,14 @@ package com.visionary.crofting.service.Impl;
 
 import com.visionary.crofting.entity.Product;
 import com.visionary.crofting.entity.Stock;
+import com.visionary.crofting.repository.ProductRepository;
 import com.visionary.crofting.repository.StockRepository;
 import com.visionary.crofting.response.ApiResponse;
 import com.visionary.crofting.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -17,6 +19,9 @@ import java.util.regex.Pattern;
 public class StockService implements IService {
     @Autowired
     StockRepository stockRepository;
+
+    @Autowired
+    ProductRepository productRepository;
     @Override
     public ApiResponse<Stock> save(Object request) throws Exception {
         try {
@@ -35,7 +40,7 @@ public class StockService implements IService {
             stock.setPassword(stockrequest.getPassword());
             stock.setPhone(stockrequest.getPhone());
             stock.setAddress(stockrequest.getAddress());
-            stockRepository.save(stock);
+            List<Product> products = new ArrayList<>();
             for (Product productRequest : stockrequest.getProducts()) {
                 Product product = new Product();
                 product.setReference(productRequest.getReference());
@@ -44,8 +49,11 @@ public class StockService implements IService {
                 product.setInitialPrice(productRequest.getInitialPrice());
                 product.setQuantity(productRequest.getQuantity());
                 product.setStock(stock);
-                //ticketAttachmentRepository.save(product);
+                products.add(product);
+                productRepository.save(product);
             }
+            stock.setProducts(products);
+            stockRepository.save(stock);
             stockApiResponse.setResponseCode(ApiResponse.ResponseCode.SUCCESS);
             stockApiResponse.setData(stock);
             return stockApiResponse;
